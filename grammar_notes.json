@@ -1,0 +1,65 @@
+[
+  {
+    "id": "hukum_dm",
+    "lang": "ms",
+    "title": "Hukum D-M (Diterangkan - Menerangkan)",
+    "title_zh": "马来文核心语序：修饰词置于名词后 (Hukum D-M)",
+    "explanation": "In Bahasa Melayu, the descriptive adjective comes AFTER the noun (Diterangkan + Menerangkan). E.g. 'kereta merah' (car red), NOT 'merah kereta'. In English & Chinese, adjectives come before nouns ('red car', '红色的车'). This is one of the most common student mistakes!",
+    "example_zh": "红色的书 (Chinese: Adjective + Noun) ➔ Sebuah buku merah (Malay: Noun + Adjective)。",
+    "example_en": "Red book (English) ➔ Buku (Noun) + Merah (Adjective) in Malay."
+  },
+  {
+    "id": "imbuhan_awalan",
+    "lang": "ms",
+    "title": "Imbuhan Awalan (Prefixes: meN-, ber-, peN-, ter-)",
+    "title_zh": "马来文字首缀词 (Imbuhan Awalan)",
+    "explanation": "Malay verbs and nouns are formed by adding prefixes to the root word (kata dasar):\n• meN-: Active transitive verb (ajar ➔ mengajar = to teach; baca ➔ membaca = to read)\n• ber-: Intransitive/habitual action (ajar ➔ belajar = to study; main ➔ bermain = to play)\n• peN-: Person/agent of action (ajar ➔ pengajar = educator; tulis ➔ penulis = writer)\n• ter-: Accidental or superlative (paling) action (baca ➔ terbaca = accidentally read; pandai ➔ terpandai = cleverest).",
+    "example_zh": "Root: ajar (教) ➔ Belajar (学习 - murid), Mengajar (教学 - cikgu), Pengajar (导师)。",
+    "example_en": "Root: ajar ➔ Belajar (to learn), Mengajar (to teach), Pengajar (teacher/instructor)."
+  },
+  {
+    "id": "kata_sendi_nama",
+    "lang": "ms",
+    "title": "Kata Sendi Nama: 'Dari' vs 'Daripada'",
+    "title_zh": "介词辨析：“Dari” 与 “Daripada” 的区别",
+    "explanation": "A critical SPM/KSSR grammar pitfall:\n• DARI is used strictly for ATM: Arah (direction), Tempat (place), Masa (time). E.g., 'dari sekolah' (from school), 'dari pukul 8' (from 8 AM).\n• DARIPADA is used for everything else: People, Comparisons, Origin/Material, and Sources. E.g., 'hadiah daripada ibu' (gift from mother), 'lebih tinggi daripada' (taller than).",
+    "example_zh": "从学校出来 (Tempat) ➔ Dari sekolah; 老师给的信 (Orang) ➔ Daripada cikgu。",
+    "example_en": "From school (Place) ➔ Dari sekolah; From the teacher (Person) ➔ Daripada cikgu."
+  },
+  {
+    "id": "penjodoh_bilangan",
+    "lang": "ms",
+    "title": "Penjodoh Bilangan (Malay Classifiers / 量词)",
+    "title_zh": "马来文量词 (Penjodoh Bilangan)",
+    "explanation": "Just like Chinese measure words (量词), Malay requires Penjodoh Bilangan with numbers:\n• buah: large items, books, buildings, vehicles (sebuah buku, sebuah kereta)\n• orang: human beings (seorang guru, dua orang murid)\n• batang: long, rigid objects like pens, roads, trees (sebatang pen)\n• ekor: animals (seekor kucing)\n• helai: thin, flat items like paper, clothes (sehelai kertas).",
+    "example_zh": "三本书 (三 + 本 + 书) ➔ Tiga buah buku (Tiga + buah + buku)。",
+    "example_en": "Three books ➔ Tiga (three) + buah (classifier) + buku (book)."
+  },
+  {
+    "id": "svo",
+    "lang": "zh",
+    "title": "Basic Word Order: S + V + O",
+    "title_zh": "中文基本语序：主语 + 谓语 + 宾语",
+    "explanation": "Chinese, English, and Malay all fundamentally follow Subject + Verb + Object order in simple declarative statements.",
+    "example_zh": "我 (Subject) + 学习 (Verb) + 汉语 (Object)。",
+    "example_en": "I study Chinese. / Saya belajar bahasa Cina."
+  },
+  {
+    "id": "time_manner_place",
+    "lang": "zh",
+    "title": "Time and Place Before the Verb in Chinese",
+    "title_zh": "时间与地点位于动词前",
+    "explanation": "In English and Malay, time and place often appear at the end of a sentence ('Saya membaca buku di perpustakaan pada waktu pagi'). In Chinese, time and location usually go BEFORE the main verb: Subject + Time + Place + Verb + Object.",
+    "example_zh": "我 (Subject) + 今天上午 (Time) + 在图书馆 (Place) + 看书 (Verb + Object)。",
+    "example_en": "Saya membaca buku di perpustakaan pagi ini. / I read books in the library this morning."
+  },
+  {
+    "id": "de_particles",
+    "lang": "zh",
+    "title": "The Three 'De's in Chinese: 的, 得, 地",
+    "title_zh": "“的、得、地”的区别",
+    "explanation": "• 的 (de): Noun modifier / possession ('我的书' = buku saya).\n• 地 (de): Adverb marker before a verb ('认真地学习' = belajar dengan tekun).\n• 得 (de): Complement marker after a verb describing manner/degree ('他说得很好' = dia bercakap dengan baik).",
+    "example_zh": "他认真地 (地) 读完了这本有趣的 (的) 书，并且学得 (得) 很快乐。",
+    "example_en": "Dia membaca buku yang menarik (的) dengan tekun (地) dan belajar dengan gembira (得)."
+  }
+]

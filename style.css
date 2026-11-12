@@ -1,0 +1,112 @@
+/* Custom styling for Student Translation Hub */
+
+:root {
+    --tone-1-color: #2563eb; /* Blue - 1st Tone (high flat: ā) */
+    --tone-2-color: #16a34a; /* Green - 2nd Tone (rising: á) */
+    --tone-3-color: #d97706; /* Amber/Orange - 3rd Tone (falling-rising: ǎ) */
+    --tone-4-color: #dc2626; /* Red - 4th Tone (falling: à) */
+    --tone-5-color: #64748b; /* Slate - 5th Neutral Tone (light: a) */
+}
+
+/* Tone color classes */
+.tone-1 { color: var(--tone-1-color) !important; font-weight: 600; }
+.tone-2 { color: var(--tone-2-color) !important; font-weight: 600; }
+.tone-3 { color: var(--tone-3-color) !important; font-weight: 600; }
+.tone-4 { color: var(--tone-4-color) !important; font-weight: 600; }
+.tone-5 { color: var(--tone-5-color) !important; font-weight: 500; }
+
+.tone-badge-1 { background-color: #dbeafe; color: #1d4ed8; }
+.tone-badge-2 { background-color: #dcfce7; color: #15803d; }
+.tone-badge-3 { background-color: #fef3c7; color: #b45309; }
+.tone-badge-4 { background-color: #fee2e2; color: #b91c1c; }
+.tone-badge-5 { background-color: #f1f5f9; color: #475569; }
+
+/* Ruby tags for Chinese characters with Pinyin */
+ruby {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    vertical-align: bottom;
+    margin: 0 2px;
+    line-height: 1.2;
+}
+
+ruby rt {
+    font-size: 0.62em;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    user-select: text;
+    margin-bottom: 2px;
+}
+
+/* 3D Flashcard flip */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flashcard-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Subtle bounce animation for audio button */
+@keyframes pulse-subtle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.playing-audio {
+    animation: pulse-subtle 0.8s infinite ease-in-out;
+}
+
+/* Word token chip hover */
+.word-chip {
+    transition: all 0.2s ease;
+}
+.word-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

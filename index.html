@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Learn - Trilingual English, Chinese & Malay Student Learning Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand / Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white text-xl font-bold shadow-md shadow-indigo-100">
+                        ▲
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-lg text-slate-900 tracking-tight">Apex Learn</span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">三语学堂 · Trilingual Hub</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 font-medium">English ⇄ 简体中文 ⇄ Bahasa Melayu</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200/80">
+                    <button class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold transition bg-indigo-600 text-white shadow-sm flex items-center gap-1.5" data-tab="translator">
+                        <span>🌐</span>
+                        <span>Translator</span>
+                    </button>
+                    <button class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-white/60 transition flex items-center gap-1.5" data-tab="vocab">
+                        <span>📖</span>
+                        <span>Word Bank (生词本)</span>
+                    </button>
+                    <button class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-white/60 transition flex items-center gap-1.5" data-tab="flashcards">
+                        <span>🃏</span>
+                        <span>Flashcards</span>
+                    </button>
+                    <button class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-white/60 transition flex items-center gap-1.5" data-tab="quiz">
+                        <span>🎯</span>
+                        <span>Practice Quiz</span>
+                    </button>
+                    <button class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-white/60 transition flex items-center gap-1.5" data-tab="grammar">
+                        <span>📚</span>
+                        <span>Grammar & Tatabahasa</span>
+                    </button>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="App.toggleSettingsModal(true)" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 transition" title="Settings / API Key">
+                        ⚙️
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Sub-navigation bar -->
+            <div class="md:hidden flex items-center justify-around py-2 border-t border-slate-100 text-xs overflow-x-auto gap-1">
+                <button class="nav-tab-btn px-2.5 py-1.5 rounded-lg font-semibold bg-indigo-600 text-white" data-tab="translator">Translator</button>
+                <button class="nav-tab-btn px-2.5 py-1.5 rounded-lg font-semibold text-slate-600" data-tab="vocab">Word Bank</button>
+                <button class="nav-tab-btn px-2.5 py-1.5 rounded-lg font-semibold text-slate-600" data-tab="flashcards">Cards</button>
+                <button class="nav-tab-btn px-2.5 py-1.5 rounded-lg font-semibold text-slate-600" data-tab="quiz">Quiz</button>
+                <button class="nav-tab-btn px-2.5 py-1.5 rounded-lg font-semibold text-slate-600" data-tab="grammar">Grammar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+        <!-- ================= VIEW 1: TRANSLATOR & BREAKDOWN ================= -->
+        <div id="view-translator" class="tab-view-content space-y-6">
+
+            <!-- Control Bar (Language switcher, Quick pairings, Speech speed, Tone color toggle) -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+                
+                <!-- Language Direction Controls -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="flex items-center gap-1.5 bg-slate-100 rounded-xl p-1 border border-slate-200">
+                        <select id="sourceLangSelect" onchange="App.onLangSelectChange()" class="bg-transparent text-xs font-bold text-slate-700 py-1 px-2 focus:outline-none cursor-pointer">
+                            <option value="auto">Auto Detect</option>
+                            <option value="en">English (🇺🇸)</option>
+                            <option value="zh">简体中文 (🇨🇳)</option>
+                            <option value="ms">Bahasa Melayu (🇲🇾)</option>
+                        </select>
+                        <span class="text-slate-400 font-bold">➔</span>
+                        <select id="targetLangSelect" onchange="App.onLangSelectChange()" class="bg-transparent text-xs font-bold text-indigo-700 py-1 px-2 focus:outline-none cursor-pointer">
+                            <option value="zh">简体中文 (🇨🇳)</option>
+                            <option value="ms">Bahasa Melayu (🇲🇾)</option>
+                            <option value="en">English (🇺🇸)</option>
+                        </select>
+                    </div>
+
+                    <button id="langSwapBtn" onclick="App.swapLanguageDirection()" class="p-2 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600 transition" title="Swap languages">
+                        ⇄
+                    </button>
+
+                    <!-- Quick Pairing Pills -->
+                    <div class="hidden sm:flex items-center gap-1 overflow-x-auto">
+                        <button onclick="App.setLanguageDirection('en', 'zh')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">EN ➔ 中文</button>
+                        <button onclick="App.setLanguageDirection('zh', 'en')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">中文 ➔ EN</button>
+                        <button onclick="App.setLanguageDirection('en', 'ms')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">EN ➔ Melayu</button>
+                        <button onclick="App.setLanguageDirection('ms', 'zh')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Melayu ➔ 中文</button>
+                        <button onclick="App.setLanguageDirection('zh', 'ms')" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">中文 ➔ Melayu</button>
+                    </div>
+
+                    <span id="langDirectionLabel" class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">
+                        Auto Detect ➔ Target
+                    </span>
+                </div>
+
+                <!-- Right Preferences: Auto-Translate, Speed, Tone Colors -->
+                <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-600">
+                    <!-- Auto-Translate Toggle -->
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none px-2.5 py-1 rounded-lg bg-indigo-50/80 border border-indigo-200 text-indigo-900 font-bold hover:bg-indigo-100 transition">
+                        <input type="checkbox" id="autoTranslateToggle" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
+                        <span>⚡ Auto-Translate</span>
+                    </label>
+
+                    <!-- Audio Speed Selector -->
+                    <div class="flex items-center gap-1.5">
+                        <span>🔊 Speed:</span>
+                        <select id="audioSpeedSelect" class="bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                            <option value="1.0">1.0x (Normal)</option>
+                            <option value="0.75" selected>0.75x (Learning)</option>
+                            <option value="0.5">0.5x (Slow)</option>
+                        </select>
+                    </div>
+
+                    <!-- Tone Color Toggle -->
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                        <input type="checkbox" id="toneColorToggle" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
+                        <span>Tone Colors</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Student Presets / Quick prompts in EN, ZH, MS -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+                <span class="text-slate-400 font-semibold uppercase tracking-wider text-[10px] shrink-0">Student Presets:</span>
+                <div id="presetPromptsContainer" class="flex items-center gap-2 shrink-0"></div>
+            </div>
+
+            <!-- Translation Workspace: Dual Panels -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- Input Panel -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Input Text</span>
+                                <span id="autoTranslateBadge" class="hidden text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 animate-pulse">⚡ Auto-translated</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="App.clearInput()" class="text-xs text-slate-400 hover:text-rose-500 transition">
+                                    Clear
+                                </button>
+                                <span id="inputCharCount" class="text-xs text-slate-400 font-mono">0 chars</span>
+                            </div>
+                        </div>
+
+                        <textarea id="sourceTextInput" rows="6" placeholder="Type or paste English, Chinese, or Malay text here...
+Examples:
+• 'Tomorrow morning we have an English exam in the classroom.'
+• '老师，请问明天的考试在哪个教室？'
+• 'Selamat pagi cikgu! Saya ingin belajar bahasa Cina.'" class="w-full text-lg text-slate-800 placeholder-slate-400 border-0 focus:outline-none focus:ring-0 resize-none font-normal leading-relaxed"></textarea>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <button onclick="App.speakInput()" class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition flex items-center gap-1.5 text-xs font-semibold" title="Listen to input">
+                            <span>🔊</span>
+                            <span>Listen to Input</span>
+                        </button>
+
+                        <button id="translateActionBtn" onclick="App.executeTranslation(false)" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-xl shadow-md shadow-indigo-200 transition flex items-center gap-2">
+                            <span>Translate</span>
+                            <span id="translationLoader" class="hidden animate-spin">⏳</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Output Panel -->
+                <div id="translationOutputCard" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span id="outputCardHeading" class="text-xs font-bold uppercase tracking-wider text-indigo-600">Translation & Pronunciation</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="App.copyText('translatedResultText')" class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-lg transition text-xs font-semibold" title="Copy translation">
+                                    📋 Copy
+                                </button>
+                                <button onclick="App.saveCurrentSentence()" class="px-2.5 py-1 text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg transition border border-emerald-200 flex items-center gap-1" title="Save sentence to Word Bank">
+                                    ⭐ Save to Word Bank
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Pinyin Ruby Annotation View (for Chinese content) -->
+                        <div id="pinyinRubyDisplay" class="p-4 bg-slate-50 rounded-xl border border-slate-100 leading-loose flex flex-wrap gap-y-4 gap-x-2 items-end min-h-[70px]">
+                            <span class="text-slate-400 text-sm italic">Translation and pronunciation will appear here...</span>
+                        </div>
+
+                        <!-- Plain Text Translation -->
+                        <div class="mt-4">
+                            <p id="translatedResultText" class="text-xl font-bold text-slate-900 leading-relaxed"></p>
+                            <p id="pinyinRawText" class="text-xs text-indigo-600 font-semibold mt-1"></p>
+                        </div>
+                    </div>
+
+                    <!-- Dual Audio Buttons -->
+                    <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                        <button onclick="App.speakOutput()" class="p-2 rounded-xl text-indigo-600 hover:bg-indigo-50 transition flex items-center gap-1.5 text-xs font-bold">
+                            <span>🔊</span>
+                            <span id="speakOutputLabel">Listen to Translation</span>
+                        </button>
+                        <div class="flex items-center gap-2">
+                            <button id="speakChineseOnlyBtn" onclick="App.speakChineseText()" class="hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition flex items-center gap-1.5 text-xs font-semibold">
+                                <span>🗣️</span>
+                                <span>Listen to Chinese</span>
+                            </button>
+                            <button id="speakMalayOnlyBtn" onclick="App.speakMalayText()" class="hidden p-2 rounded-xl text-emerald-700 hover:bg-emerald-50 transition flex items-center gap-1.5 text-xs font-semibold">
+                                <span>🗣️</span>
+                                <span>Sebutan Melayu</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tone Color Guide Legend -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <span class="font-bold text-slate-700">🎨 Chinese Tone Guide:</span>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="px-2 py-0.5 rounded font-semibold tone-badge-1">1st Tone (ā): Blue</span>
+                    <span class="px-2 py-0.5 rounded font-semibold tone-badge-2">2nd Tone (á): Green</span>
+                    <span class="px-2 py-0.5 rounded font-semibold tone-badge-3">3rd Tone (ǎ): Amber</span>
+                    <span class="px-2 py-0.5 rounded font-semibold tone-badge-4">4th Tone (à): Red</span>
+                    <span class="px-2 py-0.5 rounded font-semibold tone-badge-5">Neutral Tone (a): Slate</span>
+                </div>
+                <span class="text-[11px] text-slate-400">Click any character or word card below to view definitions in English & Malay</span>
+            </div>
+
+            <!-- Word-by-word Breakdown Section -->
+            <div id="wordBreakdownSection" class="hidden bg-slate-100/70 p-5 rounded-2xl border border-slate-200">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+                        <span>🔍</span>
+                        <span>Trilingual Word Breakdown (词汇解析)</span>
+                    </h3>
+                    <span class="text-xs text-slate-500">Click a card for full English + Malay definitions</span>
+                </div>
+                <div id="breakdownChipsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+            </div>
+
+            <!-- Grammar & Tatabahasa Alert Section -->
+            <div id="grammarTipsSection" class="hidden space-y-3">
+                <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+                    <span>💡</span>
+                    <span>Student Grammar & Tatabahasa Notes</span>
+                </h3>
+                <div id="grammarTipsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+        </div>
+
+        <!-- ================= VIEW 2: VOCABULARY BANK ================= -->
+        <div id="view-vocab" class="tab-view-content hidden space-y-6">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Student Trilingual Word Bank (三语生词本)</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Your personal vocabulary deck with Chinese, English, and Bahasa Melayu.</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="relative">
+                        <input type="text" id="vocabSearchInput" oninput="App.renderVocabList()" placeholder="Search Chinese, English, Melayu..." class="pl-8 pr-4 py-2 bg-slate-100 rounded-xl text-xs border border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 w-56">
+                        <span class="absolute left-2.5 top-2.5 text-xs text-slate-400">🔍</span>
+                    </div>
+
+                    <button onclick="App.openAddWordModal()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                        <span>➕</span>
+                        <span>Add Word</span>
+                    </button>
+
+                    <button onclick="App.switchTab('flashcards')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                        <span>🃏</span>
+                        <span>Study Cards</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vocabulary Cards List -->
+            <div id="vocabListContainer" class="space-y-3"></div>
+
+            <div id="vocabEmptyState" class="hidden p-12 text-center bg-white rounded-2xl border border-dashed border-slate-200">
+                <div class="text-4xl mb-2">📚</div>
+                <h3 class="font-bold text-slate-700">No words found in your Word Bank</h3>
+                <p class="text-xs text-slate-500 mt-1">Translate sentences and click "+ Save" to review words here, or click "Add Word" to add your own.</p>
+                <button onclick="App.switchTab('translator')" class="mt-4 px-4 py-2 bg-indigo-50 text-indigo-700 font-semibold rounded-xl text-xs hover:bg-indigo-100 transition">
+                    Go to Translator
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 3: FLASHCARDS ================= -->
+        <div id="view-flashcards" class="tab-view-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto space-y-6">
+                <!-- Deck Header & Stats -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Trilingual Flashcard Deck</span>
+                        <div class="flex items-center gap-3 mt-1">
+                            <span class="text-sm font-bold text-slate-800">Total: <span id="statTotalCards">0</span></span>
+                            <span class="text-slate-300">|</span>
+                            <span class="text-sm font-bold text-emerald-600">Mastered: <span id="statMasteredCards">0</span></span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button id="pinyinToggleBtn" onclick="FlashcardManager.togglePinyinVisibility()" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-600 transition">
+                            Hide Pinyin
+                        </button>
+                        <button onclick="FlashcardManager.shuffle()" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-600 transition" title="Shuffle Deck">
+                            🔀 Shuffle
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div id="deckProgressBar" class="bg-indigo-600 h-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- 3D Flashcard Container -->
+                <div class="perspective-1000 w-full h-84 sm:h-96 cursor-pointer select-none" onclick="FlashcardManager.flip()">
+                    <div id="flashcardInner" class="flashcard-inner shadow-lg rounded-2xl">
+                        
+                        <!-- Front of Flashcard (Chinese + Pinyin + Audio) -->
+                        <div class="flashcard-front bg-gradient-to-b from-white to-slate-50 border-2 border-indigo-100">
+                            <div class="absolute top-4 left-4 text-xs font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md">
+                                FRONT
+                            </div>
+                            <div id="cardCounter" class="absolute top-4 right-4 text-xs font-semibold text-slate-400">
+                                1 / 10
+                            </div>
+
+                            <div class="my-auto text-center">
+                                <h2 id="cardChineseFront" class="text-5xl sm:text-6xl font-extrabold text-slate-900 mb-3 tracking-tight"></h2>
+                                <p id="cardPinyinFront" class="text-xl sm:text-2xl font-bold text-indigo-600 tracking-wide"></p>
+                            </div>
+
+                            <div class="absolute bottom-4 flex items-center justify-between w-full px-6">
+                                <button id="cardAudioFront" class="p-3 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-600 transition shadow-sm" title="Listen Chinese pronunciation">
+                                    🔊 🇨🇳
+                                </button>
+                                <span class="text-xs text-slate-400 font-medium">Click card to reveal English & Melayu ↺</span>
+                            </div>
+                        </div>
+
+                        <!-- Back of Flashcard (English + Malay + Examples) -->
+                        <div class="flashcard-back bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 text-white border-2 border-indigo-700">
+                            <div class="absolute top-4 left-4 text-xs font-bold text-indigo-300 bg-indigo-800/60 px-2 py-0.5 rounded-md">
+                                BACK
+                            </div>
+                            <div id="cardHskBack" class="absolute top-4 right-4 text-xs font-bold px-2 py-0.5 bg-indigo-600 rounded text-white">
+                                HSK 1
+                            </div>
+
+                            <div class="my-auto text-center px-4 max-w-lg w-full">
+                                <h3 id="cardChineseBack" class="text-2xl font-bold text-indigo-200 mb-0.5"></h3>
+                                <p id="cardPinyinBack" class="text-xs font-semibold text-indigo-300 mb-3"></p>
+                                
+                                <div class="space-y-1 mb-2">
+                                    <div class="text-2xl font-extrabold text-white" id="cardEnglishBack"></div>
+                                    <div class="text-lg font-bold text-emerald-400" id="cardMalayBack"></div>
+                                </div>
+
+                                <span id="cardPosBack" class="inline-block text-[11px] uppercase tracking-wider font-semibold text-indigo-300 mb-2 bg-indigo-800/40 px-2 py-0.5 rounded"></span>
+                                
+                                <div class="p-2.5 bg-white/10 rounded-xl text-left border border-white/10 text-xs space-y-1">
+                                    <p id="cardExZhBack" class="font-semibold text-white"></p>
+                                    <p id="cardExEnBack" class="text-slate-300 italic"></p>
+                                    <p id="cardExMsBack" class="text-emerald-300 italic"></p>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-4 flex items-center justify-between w-full px-6">
+                                <div class="flex items-center gap-2">
+                                    <button id="cardAudioBack" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition text-xs font-bold" title="Listen English">
+                                        🔊 🇺🇸
+                                    </button>
+                                    <button id="cardAudioBackMs" class="p-2.5 rounded-full bg-emerald-800/60 hover:bg-emerald-700 text-white transition text-xs font-bold" title="Listen Melayu">
+                                        🔊 🇲🇾
+                                    </button>
+                                </div>
+                                <span class="text-xs text-indigo-300 font-medium">Click card to flip back ↺</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Flashcard Navigation & Mastery Controls -->
+                <div class="flex items-center justify-between gap-4">
+                    <button onclick="FlashcardManager.prevCard()" class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-white font-bold text-xs text-slate-700 shadow-sm transition">
+                        ← Previous
+                    </button>
+
+                    <div class="flex items-center gap-3">
+                        <button onclick="FlashcardManager.markCardMastered(false)" class="px-5 py-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs transition">
+                            Need Practice ⏳
+                        </button>
+                        <button onclick="FlashcardManager.markCardMastered(true)" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-200 transition">
+                            Got It! ✓
+                        </button>
+                    </div>
+
+                    <button onclick="FlashcardManager.nextCard()" class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-white font-bold text-xs text-slate-700 shadow-sm transition">
+                        Next →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 4: PRACTICE QUIZ ================= -->
+        <div id="view-quiz" class="tab-view-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto space-y-6">
+
+                <!-- Header / Mode Selector -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">Interactive Trilingual Quiz (自测与练习)</h2>
+                            <p class="text-xs text-slate-500">Test vocabulary recognition across Chinese, English, and Bahasa Melayu.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="FlashcardManager.startQuiz(5, FlashcardManager.quizMode)" class="px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-xs font-bold transition">
+                                5 Questions
+                            </button>
+                            <button onclick="FlashcardManager.startQuiz(10, FlashcardManager.quizMode)" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 text-xs font-bold transition">
+                                10 Questions
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Mode Filter Tabs -->
+                    <div class="flex items-center gap-1.5 pt-2 border-t border-slate-100 overflow-x-auto text-xs">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 shrink-0">Quiz Pairing:</span>
+                        <button onclick="FlashcardManager.startQuiz(5, 'all')" class="px-2.5 py-1 rounded-lg font-bold bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition shrink-0">🌐 Trilingual Mix</button>
+                        <button onclick="FlashcardManager.startQuiz(5, 'zh_ms')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition shrink-0">🇨🇳 ⇄ 🇲🇾 Cina - Melayu</button>
+                        <button onclick="FlashcardManager.startQuiz(5, 'zh_en')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition shrink-0">🇨🇳 ⇄ 🇺🇸 Chinese - English</button>
+                        <button onclick="FlashcardManager.startQuiz(5, 'en_ms')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition shrink-0">🇺🇸 ⇄ 🇲🇾 English - Melayu</button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="quizLoading" class="hidden text-center p-12 bg-white rounded-2xl border border-slate-200">
+                    <div class="text-3xl animate-bounce mb-2">🎯</div>
+                    <p class="text-sm font-semibold text-slate-700">Generating quiz from your trilingual word bank...</p>
+                </div>
+
+                <!-- Active Quiz Question Area -->
+                <div id="quizActiveArea" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <div class="flex items-center gap-2">
+                            <span id="quizProgress" class="text-xs font-bold uppercase tracking-wider text-slate-500">Question 1 of 5</span>
+                            <span id="quizQuestionTypeTitle" class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700"></span>
+                        </div>
+                        <span id="quizScoreText" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">Score: 0 | Streak: 0 🔥</span>
+                    </div>
+
+                    <!-- Prompt Box -->
+                    <div class="text-center py-6 bg-slate-50 rounded-2xl border border-slate-100 relative">
+                        <button id="quizAudioBtn" class="absolute top-3 right-3 p-2 rounded-full bg-white hover:bg-indigo-50 text-indigo-600 shadow-sm text-sm" title="Listen">
+                            🔊
+                        </button>
+                        <h3 id="quizPrompt" class="text-4xl font-extrabold text-slate-900 mb-1"></h3>
+                        <p id="quizPinyin" class="text-base font-semibold text-indigo-600"></p>
+                        <p id="quizSubprompt" class="text-xs text-slate-500 mt-1"></p>
+                    </div>
+
+                    <!-- Multiple Choice Options -->
+                    <div id="quizOptionsContainer" class="space-y-3"></div>
+
+                    <!-- Explanation & Feedback -->
+                    <div id="quizFeedback" class="hidden"></div>
+
+                    <div class="flex justify-end">
+                        <button id="quizNextBtn" class="hidden px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition">
+                            Teruskan / Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Summary Area -->
+                <div id="quizSummaryArea" class="hidden bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center space-y-4">
+                    <div class="text-5xl">🏆</div>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Kuiz Selesai / Quiz Complete!</h2>
+                    <div class="p-4 bg-indigo-50 rounded-2xl max-w-sm mx-auto">
+                        <p class="text-xs font-bold text-indigo-500 uppercase tracking-wider">Final Score</p>
+                        <p id="quizFinalScore" class="text-3xl font-extrabold text-indigo-700 my-1">50 / 50</p>
+                        <p id="quizFinalMessage" class="text-xs font-medium text-indigo-900"></p>
+                    </div>
+                    <div class="pt-4 flex items-center justify-center gap-3">
+                        <button onclick="FlashcardManager.startQuiz(5, FlashcardManager.quizMode)" class="px-5 py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-xs hover:bg-indigo-700 transition">
+                            Practice Again
+                        </button>
+                        <button onclick="App.switchTab('flashcards')" class="px-5 py-2.5 border border-slate-200 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-50 transition">
+                            Review Flashcards
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= VIEW 5: GRAMMAR & TATABAHASA GUIDE ================= -->
+        <div id="view-grammar" class="tab-view-content hidden space-y-6">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Grammar & Tatabahasa Guide (核心语法与马来文文法)</h2>
+                    <p class="text-xs text-slate-500 mt-1">Key rules, word order differences, and common pitfalls for students.</p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="App.filterGrammarRules('')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition">All Rules</button>
+                    <button onclick="App.filterGrammarRules('ms')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">🇲🇾 Tatabahasa Melayu</button>
+                    <button onclick="App.filterGrammarRules('zh')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">🇨🇳 Chinese Grammar</button>
+                </div>
+            </div>
+
+            <div id="grammarGuideList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+
+    </main>
+
+    <!-- Word Detail Modal (Trilingual: Chinese, English, Malay) -->
+    <div id="wordDetailModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-start justify-between">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <span id="modalWordChinese" class="text-4xl font-extrabold text-slate-900"></span>
+                        <button id="modalWordAudioBtn" class="p-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-600 transition" title="Listen Chinese">
+                            🔊 🇨🇳
+                        </button>
+                        <button id="modalWordAudioMsBtn" class="p-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 transition" title="Listen Malay">
+                            🔊 🇲🇾
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="modalWordPinyin" class="text-lg font-bold text-indigo-600"></span>
+                        <div id="modalWordToneBadge"></div>
+                    </div>
+                </div>
+                <button onclick="App.closeWordModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">
+                    ✕
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <!-- English Meaning -->
+                <div class="p-3 bg-slate-50 rounded-xl">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">English Meaning</span>
+                    <p id="modalWordEnglish" class="text-base font-bold text-slate-800 mt-0.5"></p>
+                </div>
+
+                <!-- Malay Meaning -->
+                <div class="p-3 bg-emerald-50/60 rounded-xl border border-emerald-100">
+                    <span class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Maksud Bahasa Melayu</span>
+                    <p id="modalWordMalay" class="text-base font-bold text-emerald-950 mt-0.5"></p>
+                </div>
+
+                <!-- Examples -->
+                <div class="p-3 bg-slate-50 rounded-xl space-y-1">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Example Sentences (Contoh Ayat)</span>
+                    <p id="modalWordExZh" class="text-sm font-semibold text-slate-800"></p>
+                    <p id="modalWordExEn" class="text-xs text-slate-500 italic"></p>
+                    <p id="modalWordExMs" class="text-xs text-emerald-700 italic"></p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span id="modalWordPos" class="text-xs px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-semibold"></span>
+                    <span id="modalWordHsk" class="text-xs px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 font-semibold"></span>
+                    <p id="modalWordNote" class="text-xs text-amber-700 italic ml-auto"></p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="App.closeWordModal()" class="px-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition">
+                    Close
+                </button>
+                <button id="modalWordSaveBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm transition">
+                    + Save to Word Bank
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Custom Word Modal -->
+    <div id="addWordModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-slate-900 text-lg">Add New Word (Tambah Perkataan)</h3>
+                <button onclick="App.closeAddWordModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">
+                    ✕
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Chinese (华文)</label>
+                    <input type="text" id="addWordZh" placeholder="e.g. 铅笔" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Pinyin (拼音)</label>
+                    <input type="text" id="addWordPy" placeholder="e.g. qiān bǐ" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">English Definition</label>
+                    <input type="text" id="addWordEn" placeholder="e.g. pencil" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Bahasa Melayu (Maksud)</label>
+                    <input type="text" id="addWordMs" placeholder="e.g. pensel" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Category / Part of Speech</label>
+                    <input type="text" id="addWordPos" placeholder="e.g. noun / kata nama" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="App.closeAddWordModal()" class="px-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition">
+                    Batal / Cancel
+                </button>
+                <button onclick="App.submitNewWord()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition">
+                    Simpan / Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-5">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-slate-900 text-lg">Hub Settings & AI</h3>
+                <button onclick="App.toggleSettingsModal(false)" class="text-slate-400 hover:text-slate-600 text-xl font-bold">
+                    ✕
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Optional: Google Gemini API Key</label>
+                    <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    <p class="text-[11px] text-slate-400 mt-1">If provided, enables advanced AI translation with deep grammar nuances directly via Gemini. Leave blank to use fast local student dictionary & free live translation.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="App.toggleSettingsModal(false)" class="px-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition">
+                    Cancel
+                </button>
+                <button onclick="App.saveApiKey()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm transition">
+                    Save Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+        <p>Apex Learn 三语学堂 · Built for students learning English, Chinese & Bahasa Melayu · 100% Free & Open</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/speech.js"></script>
+    <script src="js/pinyin.js"></script>
+    <script src="js/flashcards.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
