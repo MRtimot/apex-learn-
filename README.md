@@ -1,5 +1,6 @@
 # Apex Learn (三语学堂) 🎓
 ### Trilingual English ⇄ 简体中文 ⇄ Bahasa Melayu Student Learning Hub
+**Founder:** Timothy Ong
 
 A modern, student-focused educational web application designed for students learning in multilingual environments (such as Malaysia, Singapore, and Southeast Asia). It provides seamless multi-directional translation, **Pinyin with tone marks and tone colors**, **native Text-to-Speech audio pronunciation for English, Chinese, and Malay**, **trilingual word-by-word breakdowns**, an interactive **Trilingual Word Bank**, **3D flashcards**, a **practice quiz mode**, and a **Grammar & Tatabahasa guide**.
 
