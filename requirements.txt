@@ -1,0 +1,2 @@
+# Apex Learn runs 100% on Python 3 standard library
+# No external pip dependencies required!
